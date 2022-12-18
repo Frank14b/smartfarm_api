@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const config = require("./config")
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-const secret = config.app.jwtToken;
 const mongoose = require("mongoose");
 
 mongoose.connect(`mongodb+srv://${config.app.dbuser}:${config.app.dbpassword}@cluster0.m0x8k.mongodb.net/?retryWrites=true&w=majority`);
@@ -25,8 +24,10 @@ const movieShema = mongoose.Schema({
 
 const Movie = mongoose.model('Movie', movieShema);
 
+console.log(config.app)
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressJwt.expressjwt({ secret: secret, algorithms: ['HS256'] }).unless({ path: ["/register"] }))
+app.use(expressJwt.expressjwt({ secret: config.app.jwtToken, algorithms: ['HS256'] }).unless({ path: ["/register"] }))
 
 app.get("/", (req, res) => {
     res.send("Hello World")
