@@ -1,6 +1,7 @@
 const config = require('../config');
 const userAccessController = require('../controllers/userAccessController');
 const accessController = require('../controllers/accessController');
+const modulesController = require('../controllers/modulesController');
 
 module.exports = function (app) {
     // user access addnew
@@ -21,5 +22,15 @@ module.exports = function (app) {
     // user role access add
     app.post('/v1/access/addaccess', function (req, res) {
         userAccessController.addNew(req, res)
+    });
+
+    // add app module
+    app.post('/v1/access/addmodule', function (req, res) {
+        modulesController.addNew(req, res)
+    });
+
+    // get all modules
+    app.post('/v1/access/getmodules', function (req, res) {
+        modulesController.getAll(req, res)
     });
 }

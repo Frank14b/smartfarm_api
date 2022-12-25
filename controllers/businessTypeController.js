@@ -1,12 +1,12 @@
 const config = require("../config")
 const jwt = require("jsonwebtoken");
-const UserRole = require("../models/UserRole");
+const businessType = require("../models/businessType");
 
 exports.addNew = (req, res) => {
 
-    const roleData = new UserRole(req.body)
+    const bTypeData = new businessType(req.body)
 
-    roleData.save((error, savedData) => {
+    bTypeData.save((error, savedData) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -20,5 +20,5 @@ exports.addNew = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-    
+
 };

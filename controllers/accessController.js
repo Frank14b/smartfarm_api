@@ -19,25 +19,11 @@ exports.addNew = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-
-    let payload = {
-        "login": req.body.username,
-        "userip": "0.0.0.0",
-        "role": "user",
-    }
-
-    const dataUser = new Acces(req.body)
-
-    dataUser.save((error, savedUser) => {
-        if (error) {
-            if (error.message) {
-                res.json({ status: 400, error: error.message })
-            } else {
-                res.json({ status: 400, error: error })
-            }
-        } else {
-            const userToken = jwt.sign(payload, config.app.jwtToken)
-            res.json({ status: 200, token: userToken, data: savedUser })
+    Acces.find({}).exec((err, data) => {
+        if(err) {
+            res.json({error: err, status: 400})
+        }else{
+            res.json({data: data, status: 200})
         }
     })
 };

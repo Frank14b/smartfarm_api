@@ -1,5 +1,3 @@
-const config = require('../config');
-const authController = require('../controllers/authController');
 const rolesController = require('../controllers/rolesController');
 
 module.exports = function (app) {
