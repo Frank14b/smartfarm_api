@@ -1,18 +1,11 @@
 const config = require("../config")
-const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const requestIP = require("request-ip");
+const Acces = require("../models/Acces");
 
-exports.login = (req, res) => {
-    let payload = {
-        "email": req.body.email,
-        "userip": "0.0.0.0",
-        "role": "user",
-    }
+exports.addNew = (req, res) => {
+    const accessData = new Acces(req.body)
 
-    const dataUser = new User(req.body)
-
-    dataUser.save((error, savedUser) => {
+    accessData.save((error, savedData) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -20,21 +13,20 @@ exports.login = (req, res) => {
                 res.json({ status: 400, error: error })
             }
         } else {
-            const userToken = jwt.sign(payload, config.app.jwtToken)
-            res.json({ status: 200, token: userToken, data: savedUser })
+            res.json({ status: 200, data: savedData })
         }
     })
 };
 
-exports.register = (req, res) => {
+exports.getAll = (req, res) => {
 
     let payload = {
         "login": req.body.username,
-        "email": req.body.email,
-        "userip": "",
+        "userip": "0.0.0.0",
+        "role": "user",
     }
 
-    const dataUser = new User(req.body)
+    const dataUser = new Acces(req.body)
 
     dataUser.save((error, savedUser) => {
         if (error) {

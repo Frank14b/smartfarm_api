@@ -15,7 +15,7 @@ db.once('open', () => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('./routes/users')(app);
+require('./routes')(app);
 
 app.listen(3001, () => {
     console.log("app runing on 3001");
