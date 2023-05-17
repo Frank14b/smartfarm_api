@@ -21,7 +21,8 @@ const userAccesSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        default: 1
+        default: 1,
+        enum: [0, 1, 2]
     }
 });
 

@@ -10,12 +10,13 @@ const modulesSchema = new mongoose.Schema({
         type: String,
         required: [true, "description is required"]
     },
-    code: {
+    ref: {
         type: String,
-        required: [true, "code is required"]
+        required: [true, "Ref is required"]
     },
     price: {
-        type: String,
+        type: Number,
+        default: 0
     },
     createdAt: {
         type: Date,
@@ -27,7 +28,8 @@ const modulesSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        default: 1
+        default: 1,
+        enum: [0, 1, 2]
     }
 });
 
