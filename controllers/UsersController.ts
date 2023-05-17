@@ -9,7 +9,7 @@ const requestIP = require("request-ip");
 
 exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any => { // user login 
     try {
-        let payload = {
+        const payload = {
             "email": req.body.email,
             "userip": "0.0.0.0",
             "role": "user",
@@ -36,7 +36,7 @@ exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any 
 
 exports.register = (req:any, res:any): Response<ResultUserLoginDto>|any => { // user registration
     try {
-        let payload = {
+        const payload = {
             "email": req.body.email,
             "userip": "0.0.0.0",
             "role": "user",
@@ -65,8 +65,8 @@ exports.getAll = (req: Request, res: Response) => { // get all users
     try {
         let filter: any = null
         let status: boolean = true
-        if (req.body?.status) {
-            status = req.body?.status
+        if (req.params?.status) {
+            status = req.params?.status ? true : false
         }
         filter = { "status": { $eq: status } }
 

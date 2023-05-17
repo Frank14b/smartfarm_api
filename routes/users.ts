@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { Application, Request, Response } from "express";
 
 const usersController = require('../controllers/usersController');
 
-module.exports = function (app: any, version: string) {
+module.exports = function (app: Application, version: string) {
     // user login
     app.post(`/api/${version}/users/login`, function (req: Request, res: Response) {
         usersController.login(req, res)
