@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppConfig } from "../configs/config.type";
 import { ResultUserLoginDto, UserLoginDto, UserRegisterDto } from "../Dtos/UsersDtos";
+import { MongooseError } from "mongoose";
 
 const mongoose = require('mongoose');
 const config:AppConfig = require("../configs/index")
@@ -18,7 +19,7 @@ exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any 
 
         const dataUser = new User(req.body)
 
-        dataUser.save((error:any, savedUser: UserLoginDto) => {
+        dataUser.save((error:MongooseError, savedUser: UserLoginDto) => {
             if (error) {
                 if (error.message) {
                     res.status(400).json({ status: 400, error: error.message })
@@ -30,7 +31,7 @@ exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any 
                 res.status(200).json({ status: 200, token: userToken, data: savedUser })
             }
         })
-    } catch (error:any) {
+    } catch (error) {
         res.status(500).json({ mssg: "an error occured", status: 500, err: error })
     }
 };
@@ -45,7 +46,7 @@ exports.register = (req:any, res:any): Response<ResultUserLoginDto>|any => { // 
 
         const dataUser = new User(req.body)
 
-        dataUser.save((error:any, savedUser: UserRegisterDto) => {
+        dataUser.save((error:MongooseError, savedUser: UserRegisterDto) => {
             if (error) {
                 if (error.message) {
                     res.status(400).json({ status: 400, error: error.message })
@@ -87,14 +88,14 @@ exports.getAll = (req: Request, res: Response) => { // get all users
             }
         }
 
-        User.find(filter).populate().exec((err:any, datas:any) => {
+        User.find(filter).populate().exec((err:MongooseError, datas:Object) => {
             if (err) {
                 res.status(400).json({ error: err.message, status: 400 })
             } else {
                 res.status(200).json({ data: datas, status: 200 })
             }
         })
-    } catch (error:any) {
+    } catch (error) {
         res.status(500).json({ error: "an error occured", status: 500 })
     }
 }
@@ -104,7 +105,7 @@ exports.getById = (req: Request, res: Response) => { // get user by id
         if (!req.params?.id) {
             res.status(400).json({ error: "please provide user id", status: 400 })
         } else {
-            User.findById(req.params?.id).exec((err:any, datas:any) => {
+            User.findById(req.params?.id).exec((err:MongooseError, datas:Object) => {
                 if (err) {
                     res.status(400).json({ error: err.message, status: 400 })
                 } else {
@@ -112,7 +113,7 @@ exports.getById = (req: Request, res: Response) => { // get user by id
                 }
             })
         }
-    } catch (error:any) {
+    } catch (error) {
         res.status(500).json({ error: "an error occured", status: 500 })
     }
 }

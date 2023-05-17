@@ -1,10 +1,11 @@
+import { MongooseError } from "mongoose";
 
 const UserAcces = require("../models/UserAcces");
 
 exports.addNew = (req:any, res:any) => {
     const userAccessData = new UserAcces(req.body)
 
-    userAccessData.save((error:any, savedData:any) => {
+    userAccessData.save((error:MongooseError, savedData:Object) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -19,7 +20,7 @@ exports.addNew = (req:any, res:any) => {
 
 exports.getAll = (req:any, res:any) => {
 
-    UserAcces.find({}).populate(["access", "role"]).exec(function (err:any, data:any) {
+    UserAcces.find({}).populate(["access", "role"]).exec(function (err:MongooseError, data:Object) {
       if (err) {
         res.json({error:err})
       }else{

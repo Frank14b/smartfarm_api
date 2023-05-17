@@ -1,6 +1,6 @@
-const mongoose:any = require('mongoose');
+import mongoose from "mongoose";
 
-const userAccesSchema = mongoose.Schema({
+const userAccesSchema = new mongoose.Schema({
     access: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Acces',

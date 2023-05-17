@@ -1,5 +1,5 @@
 export type AppContants = {
     app: {
-        userAuthPath: Array<String>
+        userAuthPath: Array<string>
     }
 }

@@ -8,7 +8,7 @@ const config: AppConfig = require("./configs/index")
 const app: Application = express();
 const bodyParser = require("body-parser");
 
-const mongoose: any = require("mongoose");
+const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
 mongoose.connect(`mongodb+srv://${config.app.dbuser}:${config.app.dbpassword}@cluster0.m0x8k.mongodb.net/?retryWrites=true&w=majority`);
 const db = mongoose.connection;

@@ -1,10 +1,13 @@
+import { Request, Response } from "express";
+import { AccessDto } from "../Dtos/AccessDtos";
+import { MongooseError } from "mongoose";
 
 const Acces = require("../models/Acces");
 
-exports.addNew = (req:any, res:any) => {
+exports.addNew = (req: Request, res: Response) => {
     const accessData = new Acces(req.body)
 
-    accessData.save((error:any, savedData:any) => {
+    accessData.save((error:MongooseError, savedData:AccessDto) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -17,8 +20,8 @@ exports.addNew = (req:any, res:any) => {
     })
 };
 
-exports.getAll = (req:any, res:any) => {
-    Acces.find({}).exec((err:any, data:any) => {
+exports.getAll = (req:Request, res:Response) => {
+    Acces.find({}).exec((err:MongooseError, data:Object) => {
         if(err) {
             res.json({error: err, status: 400})
         }else{

@@ -1,3 +1,4 @@
+import { MongooseError } from "mongoose";
 
 const UserRole = require("../models/UserRole");
 
@@ -5,7 +6,7 @@ exports.addNew = (req:any, res:any) => {
 
     const roleData = new UserRole(req.body)
 
-    roleData.save((error:any, savedData:any) => {
+    roleData.save((error:MongooseError, savedData:any) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })

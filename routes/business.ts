@@ -1,7 +1,6 @@
 import { Application, Request, Response } from "express";
 
 const businessController = require('../controllers/businessController');
-const businessTypeController = require('../controllers/businessTypeController');
 
 module.exports = function (app: Application) {
     // user roles addnew

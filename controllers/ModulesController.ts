@@ -1,3 +1,4 @@
+import { MongooseError } from "mongoose";
 
 const Module = require("../models/Module");
 
@@ -5,7 +6,7 @@ exports.addNew = (req:any, res:any) => {
 
     const moduleData:any = new Module(req.body)
 
-    moduleData.save((error:any, savedData:any) => {
+    moduleData.save((error:MongooseError, savedData:Object) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
