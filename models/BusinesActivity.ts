@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const customSchema = mongoose.Schema({
+const customSchema = new mongoose.Schema({
     createdby: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

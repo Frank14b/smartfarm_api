@@ -1,43 +1,48 @@
 //////////////////////// RESULT DATA DTO /////////////////////
 
 export type ResultUserLoginDto = {
-    userName: String,
-    fullName: String,
-    phone: Number,
-    countryCode: Number,
-    country: String,
-    email: String,
+    userName: string,
+    fullName: string,
+    phone: number,
+    countryCode: number,
+    country: string,
+    email: string,
     createdAt: Date,
     modifiedAt: Date,
-    status: Number,
-    token: String,
+    status: number,
+    token: string,
 }
 
 export type ResultUserListDto ={
     data: ResultUserDto,
-    skip: Number,
-    limit: Number,
-    sort: String,
-    column: String,
-    keyword: String
+    skip: number,
+    limit: number,
+    sort: string,
+    column: string,
+    keyword: string
 }
 
 export type ResultUserDto = {
-    userName: String,
-    fullName: String,
-    phone: Number,
-    countryCode: Number,
-    country: String,
-    email: String,
+    userName: string,
+    fullName: string,
+    phone: number,
+    countryCode: number,
+    country: string,
+    email: string,
     createdAt: Date,
     modifiedAt: Date,
-    status: Number,
-    token: String,
+    status: number,
+    token: string,
 }
 
 //////////////////////// POST DATA DTO /////////////////////
 
 export type UserLoginDto = {
-    email: String,
-    password: String,
+    email: string,
+    password: string,
+}
+
+export type UserRegisterDto = {
+    email: string,
+    password: string,
 }

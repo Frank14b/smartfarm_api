@@ -1,6 +1,8 @@
 import { AppConfig } from "./configs/config.type";
 
-import express, { Application } from 'express';
+const express = require('express');
+
+import { Application } from 'express';
 
 const config: AppConfig = require("./configs/index")
 const app: Application = express();

@@ -8,7 +8,7 @@ const constants: AppContants = require("../constants/index");
 
 module.exports = function (app: Application, version: string) {
 
-    var paths = constants.app.userAuthPath;
+    let paths = constants.app.userAuthPath;
 
     if (version == "v1") {
         app.use(expressJwt.expressjwt({ secret: config.app.jwtToken, algorithms: ['HS256'] }).unless({ path: paths }))

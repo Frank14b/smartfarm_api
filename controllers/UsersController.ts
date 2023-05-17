@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { AppConfig } from "../configs/config.type";
-import { ResultUserLoginDto } from "../Dtos/UsersDtos";
+import { ResultUserLoginDto, UserLoginDto, UserRegisterDto } from "../Dtos/UsersDtos";
 
+const mongoose = require('mongoose');
 const config:AppConfig = require("../configs/index")
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
@@ -17,7 +18,7 @@ exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any 
 
         const dataUser = new User(req.body)
 
-        dataUser.save((error:any, savedUser:any) => {
+        dataUser.save((error:any, savedUser: UserLoginDto) => {
             if (error) {
                 if (error.message) {
                     res.status(400).json({ status: 400, error: error.message })
@@ -30,7 +31,7 @@ exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any 
             }
         })
     } catch (error:any) {
-        res.status(500).json({ error: "an error occured", status: 500 })
+        res.status(500).json({ mssg: "an error occured", status: 500, err: error })
     }
 };
 
@@ -44,7 +45,7 @@ exports.register = (req:any, res:any): Response<ResultUserLoginDto>|any => { // 
 
         const dataUser = new User(req.body)
 
-        dataUser.save((error:any, savedUser:any) => {
+        dataUser.save((error:any, savedUser: UserRegisterDto) => {
             if (error) {
                 if (error.message) {
                     res.status(400).json({ status: 400, error: error.message })
@@ -56,7 +57,7 @@ exports.register = (req:any, res:any): Response<ResultUserLoginDto>|any => { // 
                 res.status(200).json({ status: 200, token: userToken, data: savedUser })
             }
         })
-    } catch (error:any) {
+    } catch (error) {
         res.status(500).json({ error: "an error occured", status: 500 })
     }
 };
