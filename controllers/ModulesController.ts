@@ -17,7 +17,3 @@ exports.addNew = (req:any, res:any) => {
         }
     })
 };
-
-exports.getAll = (req, res) => {
-
-};
