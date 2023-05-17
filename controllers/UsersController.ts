@@ -5,7 +5,7 @@ import { ResultUserLoginDto } from "../Dtos/UsersDtos";
 const config:AppConfig = require("../configs/index")
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const requestIP = require("request-ip");
+// const requestIP = require("request-ip");
 
 exports.login = (req: Request, res: Response): Response<ResultUserLoginDto>|any => { // user login 
     try {

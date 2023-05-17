@@ -1,6 +1,4 @@
-import { AppConfig } from "../configs/config.type";
 
-const config: AppConfig = require("../configs/index")
 const Business = require("../models/Business");
 
 exports.addNew = (req:any, res:any) => {

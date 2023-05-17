@@ -1,7 +1,4 @@
-import { AppConfig } from "../configs/config.type";
 
-const config:AppConfig = require("../configs/index")
-const jwt = require("jsonwebtoken");
 const UserAcces = require("../models/UserAcces");
 
 exports.addNew = (req:any, res:any) => {
