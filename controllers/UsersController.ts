@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppConfig } from "../configs/config.type";
-import { ResultUserLoginDto, UserLoginDto, UserRegisterDto } from "../Dtos/UsersDtos";
+import { ResultUserDto, ResultUserLoginDto, UserLoginDto, UserRegisterDto } from "../Dtos/UsersDtos";
 import { MongooseError } from "mongoose";
 
 const mongoose = require('mongoose');
@@ -73,22 +73,24 @@ exports.getAll = (req: Request, res: Response) => { // get all users
         filter = { "status": { $eq: status } }
 
         if (req.body.keyword) {
+            const keyword = {$regex :`.*${req.body?.keyword}.*`};
+
             filter = {
                 $and: [
                     filter,
                     {
                         $or: [
-                            { username: {$regex :`.*${req.body?.keyword}.*`} },
-                            { fullname: {$regex :`.*${req.body?.keyword}.*`} },
-                            { email: {$regex :`.*${req.body?.keyword}.*`} },
-                            { country: {$regex :`.*${req.body?.keyword}.*`} }
+                            { username: keyword },
+                            { fullname: keyword },
+                            { email: keyword },
+                            { country: keyword }
                         ]
                     }
                 ]
             }
         }
 
-        User.find(filter).populate().exec((err:MongooseError, datas:Object) => {
+        User.find(filter).populate().exec((err:MongooseError, datas:Array<ResultUserDto>) => {
             if (err) {
                 res.status(400).json({ error: err.message, status: 400 })
             } else {
@@ -105,7 +107,7 @@ exports.getById = (req: Request, res: Response) => { // get user by id
         if (!req.params?.id) {
             res.status(400).json({ error: "please provide user id", status: 400 })
         } else {
-            User.findById(req.params?.id).exec((err:MongooseError, datas:Object) => {
+            User.findById(req.params?.id).exec((err:MongooseError, datas:ResultUserDto) => {
                 if (err) {
                     res.status(400).json({ error: err.message, status: 400 })
                 } else {

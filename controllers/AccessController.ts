@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AccessDto } from "../Dtos/AccessDtos";
+import { AccessDto, ResultAccessDto } from "../Dtos/AccessDtos";
 import { MongooseError } from "mongoose";
 
 const Acces = require("../models/Acces");
@@ -21,7 +21,7 @@ exports.addNew = (req: Request, res: Response) => {
 };
 
 exports.getAll = (req:Request, res:Response) => {
-    Acces.find({}).exec((err:MongooseError, data:Object) => {
+    Acces.find({}).exec((err:MongooseError, data:ResultAccessDto) => {
         if(err) {
             res.json({error: err, status: 400})
         }else{
