@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose:any = require('mongoose');
 
 const userAccesSchema = mongoose.Schema({
     access: {

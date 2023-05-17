@@ -1,11 +1,13 @@
-const config = require("../config")
+import { AppConfig } from "../configs/config.type";
+
+const config: AppConfig = require("../configs/index")
 const jwt = require("jsonwebtoken");
 const Acces = require("../models/Acces");
 
-exports.addNew = (req, res) => {
+exports.addNew = (req:any, res:any) => {
     const accessData = new Acces(req.body)
 
-    accessData.save((error, savedData) => {
+    accessData.save((error:any, savedData:any) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -18,8 +20,8 @@ exports.addNew = (req, res) => {
     })
 };
 
-exports.getAll = (req, res) => {
-    Acces.find({}).exec((err, data) => {
+exports.getAll = (req:any, res:any) => {
+    Acces.find({}).exec((err:any, data:any) => {
         if(err) {
             res.json({error: err, status: 400})
         }else{

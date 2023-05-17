@@ -1,12 +1,14 @@
-const config = require("../config")
+import { AppConfig } from "../configs/config.type";
+
+const config: AppConfig = require("../configs/index")
 const jwt = require("jsonwebtoken");
 const businessType = require("../models/businessType");
 
-exports.addNew = (req, res) => {
+exports.addNew = (req:any, res:any) => {
 
-    const bTypeData = new businessType(req.body)
+    const businessTypeData:any = new businessType(req.body)
 
-    bTypeData.save((error, savedData) => {
+    businessTypeData.save((error:any, savedData:any) => {
         if (error) {
             if (error.message) {
                 res.json({ status: 400, error: error.message })
@@ -19,6 +21,6 @@ exports.addNew = (req, res) => {
     })
 };
 
-exports.getAll = (req, res) => {
+exports.getAll = (req:any, res:any) => {
 
 };

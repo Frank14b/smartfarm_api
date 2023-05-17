@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
         required: [true, "phone is required"]
     },
     countrycode: {
-        type: String,
+        type: Number,
         required: [true, "countrycode is required"]
     },
     country: {

@@ -1,9 +1,13 @@
-const express = require("express");
-const config = require("./config")
-const app = express();
+import { AppConfig } from "./configs/config.type";
+
+import express, { Application } from 'express';
+
+const config: AppConfig = require("./configs/index")
+const app: Application = express();
 const bodyParser = require("body-parser");
 
-const mongoose = require("mongoose");
+const mongoose: any = require("mongoose");
+mongoose.set('strictQuery', false);
 mongoose.connect(`mongodb+srv://${config.app.dbuser}:${config.app.dbpassword}@cluster0.m0x8k.mongodb.net/?retryWrites=true&w=majority`);
 const db = mongoose.connection;
 db.on('error', () => {
@@ -15,8 +19,8 @@ db.once('open', () => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('./routes')(app);
+require('./routes/index')(app, "v1");
 
-app.listen(3001, () => {
-    console.log("app runing on 3001");
+app.listen(config.app.appPort, () => {
+    console.log(`app runing on ${config.app.appPort}`);
 })
