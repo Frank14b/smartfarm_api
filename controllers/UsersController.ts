@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppConfig } from "../configs/config.type";
-import { ResultUserDto, ResultUserLoginDto, UserLoginDto, UserRegisterDto } from "../Dtos/UsersDtos";
+import { ResultUserDto, ResultUserLoginDto } from "../Dtos/UsersDtos";
 import { MongooseError } from "mongoose";
 
 const config: AppConfig = require("../configs/index")
@@ -67,7 +67,7 @@ exports.register = (req: Request, res: Response) => { // user registration
 
 exports.getAll = (req: Request, res: Response) => { // get all users
     try {
-        let filter: {} = null
+        let filter = null
         let status: boolean = true
         if (req.params?.status) {
             status = req.params?.status ? true : false
