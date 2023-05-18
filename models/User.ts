@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-={}|;:'",.<>?]).{8,}$/;
+const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -12,7 +15,11 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "password is required"]
+        required: [true, "password is required"],
+        validate: {
+            validator: passwordRegex,
+            message: 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.'
+        }
     },
     phone: {
         type: Number,
@@ -29,7 +36,11 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "email is required"],
-        unique: [true, "email must be unique"]
+        unique: [true, "email must be unique"],
+        validate: {
+            validator: emailRegex,
+            message: 'Please provide a valid email address custom@test.com'
+        }
     },
     createdAt: {
         type: Date,
@@ -41,8 +52,24 @@ const userSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        default: 1
-    }
+        default: 1,
+        enum: [0, 1, 2]
+    },
+    is_admin: {
+        type: Boolean,
+        default: false
+    },
+    role: {
+        type: Number,
+        default: 1,
+        enum: [0, 1, 2]
+    },
 });
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.plugin(require('mongoose-bcrypt'), {
+    fields: ['password'],
+});
+
+const UserModel = mongoose.model('User', userSchema);
+
+module.exports = UserModel;

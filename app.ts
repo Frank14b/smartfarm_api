@@ -19,7 +19,8 @@ db.once('open', () => {
     console.log("Db connected")
 })
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 require('./routes/index')(app, "v1");
 

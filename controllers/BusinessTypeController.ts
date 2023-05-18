@@ -6,7 +6,7 @@ const businessType = require("../models/businessType");
 
 exports.addNew = (req:Request, res:Response) => {
 
-    const businessTypeData:any = new businessType(req.body)
+    const businessTypeData = new businessType(req.body)
 
     businessTypeData.save((error:MongooseError, savedData:BusinessTypesDto) => {
         if (error) {

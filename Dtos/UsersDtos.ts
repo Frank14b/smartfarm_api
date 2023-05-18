@@ -1,6 +1,7 @@
 //////////////////////// RESULT DATA DTO /////////////////////
 
 export type ResultUserLoginDto = {
+    _id: number,
     userName: string,
     fullName: string,
     phone: number,
@@ -23,6 +24,7 @@ export type ResultUserListDto ={
 }
 
 export type ResultUserDto = {
+    _id: number,
     userName: string,
     fullName: string,
     phone: number,
