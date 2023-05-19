@@ -1,4 +1,6 @@
 import { AppConfig } from "./configs/config.type";
+import swaggerUi from "swagger-ui-express";
+import * as swaggerDocument from "./autochecker/swagger.json";
 
 const express = require('express');
 
@@ -18,6 +20,8 @@ db.on('error', () => {
 db.once('open', () => {
     console.log("Db connected")
 })
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

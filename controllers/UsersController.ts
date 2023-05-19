@@ -27,7 +27,7 @@ exports.login = async (req: Request, res: Response) => { // user login
             res.status(200).json({data: dataUser, authtoken: userToken})
         } else {
             // The password is invalid
-            res.status(400).json("email or password invalid")
+            res.status(400).json({mssg:"email or password invalid", data: req.body})
         }
     } catch (error) {
         res.status(500).json({ mssg: "an error occured", status: 500, err: error })
@@ -67,7 +67,7 @@ exports.register = (req: Request, res: Response) => { // user registration
 
 exports.getAll = (req: Request, res: Response) => { // get all users
     try {
-        let filter = null
+        let filter: any = null
         let status: boolean = true
         if (req.params?.status) {
             status = req.params?.status ? true : false
