@@ -2,10 +2,10 @@
 
 export type ResultUserLoginDto = {
     _id: number,
-    userName: string,
-    fullName: string,
+    username: string,
+    fullname: string,
     phone: number,
-    countryCode: number,
+    countrycode: number,
     country: string,
     email: string,
     createdAt: Date,
@@ -25,10 +25,10 @@ export type ResultUserListDto ={
 
 export type ResultUserDto = {
     _id: number,
-    userName: string,
-    fullName: string,
+    username: string,
+    fullname: string,
     phone: number,
-    countryCode: number,
+    countrycode: number,
     country: string,
     email: string,
     createdAt: Date,
@@ -45,6 +45,11 @@ export type UserLoginDto = {
 }
 
 export type UserRegisterDto = {
+    username: string,
+    fullname: string,
+    phone: number,
+    countrycode: number,
+    country: string,
     email: string,
-    password: string,
+    password: string
 }
