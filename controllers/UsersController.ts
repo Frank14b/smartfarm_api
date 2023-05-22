@@ -40,7 +40,7 @@ exports.register = (req: Request, res: Response) => { // user registration
 
         const dataUser = new User(req.body)
 
-        dataUser.save((error: MongooseError, savedUser: ResultUserLoginDto) => {
+        dataUser.save((error: MongooseError, savedUser: ResultUserDto) => {
             if (error) {
                 if (error.message) {
                     res.status(400).json({ status: 400, error: error.message })

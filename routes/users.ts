@@ -17,7 +17,7 @@ module.exports = function (app: Application, version: string) {
     /*startJsAM
           @name: User Registration
           @params: UserRegisterDto
-          @result: ResultUserLoginDto
+          @result: ResultUserDto
           @controller: UsersController
           @Summary: Use this Api to register user generate access token
     endJsAM*/

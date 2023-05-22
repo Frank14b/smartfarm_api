@@ -1,20 +1,22 @@
 //////////////////////// RESULT DATA DTO /////////////////////
 
 export type ResultUserLoginDto = {
-    _id: number,
-    username: string,
-    fullname: string,
-    phone: number,
-    countrycode: number,
-    country: string,
-    email: string,
-    createdAt: Date,
-    modifiedAt: Date,
-    status: number,
-    token: string,
+    data: {
+        _id: number,
+        username: string,
+        fullname: string,
+        phone: number,
+        countrycode: number,
+        country: string,
+        email: string,
+        createdAt: Date,
+        modifiedAt: Date,
+        status: number,
+    },
+    authtoken: string
 }
 
-export type ResultUserListDto ={
+export type ResultUserListDto = {
     data: ResultUserDto,
     skip: number,
     limit: number,
