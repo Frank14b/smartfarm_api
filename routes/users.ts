@@ -1,51 +1,45 @@
 import { Application, Request, Response } from "express";
+import {ResultUserLoginDto, ResultUserDto} from "../Dtos/UsersDtos";
 
 const usersController = require('../controllers/usersController');
 
 module.exports = function (app: Application, version: string) {
     /*startJsAM
-          @name: User login
+          @tag: Users
+          @name: User login 
           @params: UserLoginDto
           @result: ResultUserLoginDto
-          @controller: UsersController
-          @Summary: Use this Api to login user generate access token
     endJsAM*/
-    app.post(`/api/v1/users/login`, function (req: Request, res: Response) {
-        usersController.login(req, res)
+    app.post(`/api/v1/users/login`, function (req: Request, res: Response): ResultUserLoginDto {
+        return usersController.login(req, res)
     });
 
     /*startJsAM
+          @tag: Users
           @name: User Registration
           @params: UserRegisterDto
-          @result: ResultUserLoginDto
-          @controller: UsersController
-          @Summary: Use this Api to register user generate access token
+          @result: ResultUserDto
     endJsAM*/
-    app.post(`/api/v1/users/register`, function (req: Request, res: Response) {
-        usersController.register(req, res)
+    app.post(`/api/v1/users/register`, (req: Request, res: Response): ResultUserDto => {
+        return usersController.register(req, res)
     });
 
-    // user get all users
-    /*startJsAM
-          @name: User Registration
-          @params: 
-          @result: ResultUserRegisterDto
-          @controller: UsersController
-          @Summary: Use this Api to register user generate access token
+    /*startJsAM 
+          @tag: Users
+          @name: User get all users
+          @result: ResultUserListDto
+          @query: GetAllUserDto
     endJsAM*/
     app.get(`/api/v1/users`, function (req: Request, res: Response) {
-        usersController.getAll(req, res)
+        return usersController.getAll(req, res)
     });
 
-    // user get user by id
     /*startJsAM
-          @name: User Registration
-          @params: 
+          @tag: Users
+          @name: User get user by id
           @result: ResultUserRegisterDto
-          @controller: UsersController
-          @Summary: Use this Api to register user generate access token
     endJsAM*/
     app.get(`/api/v1/users/:id`, function (req: Request, res: Response) {
-        usersController.getById(req, res)
+        return usersController.getById(req, res)
     });
 }
