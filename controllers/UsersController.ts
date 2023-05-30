@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppConfig } from "../configs/config.type";
-import { ResultUserDto, ResultUserLoginDto } from "../Dtos/UsersDtos";
+import { ResultUserDto } from "../Dtos/UsersDtos";
 import { MongooseError } from "mongoose";
 
 const config: AppConfig = require("../configs/index")
@@ -12,7 +12,7 @@ exports.login = async (req: Request, res: Response) => { // user login
     try {
         const userIp = requestIP.getClientIp(req);
 
-        let dataUser = await User.findOne({ email: req.body?.email ?? "" });
+        const dataUser = await User.findOne({ email: req.body?.email ?? "" });
 
         const checkPassword = await dataUser.verifyPassword(req.body?.password ?? "")
 
@@ -23,8 +23,6 @@ exports.login = async (req: Request, res: Response) => { // user login
                 email: req.body.email,
                 ip: userIp,
             }
-
-            delete dataUser.password
 
             const propertyDescriptor = Object.getOwnPropertyDescriptor(dataUser, 'password');
             console.log(propertyDescriptor?.configurable);
