@@ -2,20 +2,13 @@ import mongoose from "mongoose";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-={}|;:'",.<>?]).{8,}$/;
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const stringRegex = /[&\/\\#,+()@$~%.'":*?<>{}]/g;
-
+const stringRegex = /^[&\/\\#,+()@$~%.'":*?<>{}]/g;
 
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "username is required"],
         unique: [true, "email must be unique"],
-        validate: {
-            validator: (value: string) => {
-                return stringRegex.test(value)
-            },
-            message: "Special characters not allowed on username"
-        }
     },
     fullname: {
         type: String,
@@ -93,11 +86,11 @@ userSchema.pre('save', function (next) {
     next()
 });
 
-userSchema.post('save', function (data) {
-
-});
-
+userSchema.pre('find', function () {
+    this.find({ status: { $ne: 2 } });
+})
 
 const UserModel = mongoose.model('User', userSchema);
+
 
 module.exports = UserModel;

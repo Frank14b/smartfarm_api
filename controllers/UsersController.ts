@@ -12,9 +12,11 @@ exports.login = async (req: Request, res: Response) => { // user login
     try {
         const userIp = requestIP.getClientIp(req);
 
-        const dataUser = await User.findOne({ email: req.body?.email ?? "" });
+        let dataUser = await User.findOne({ email: req.body?.email ?? "" });
 
-        if (dataUser && dataUser.verifyPassword(req.body?.password ?? "")) {
+        const checkPassword = await dataUser.verifyPassword(req.body?.password ?? "")
+
+        if (dataUser && checkPassword) {
             // The password is valid
             const payload = {
                 id: dataUser?._id,
@@ -22,12 +24,17 @@ exports.login = async (req: Request, res: Response) => { // user login
                 ip: userIp,
             }
 
+            delete dataUser.password
+
+            const propertyDescriptor = Object.getOwnPropertyDescriptor(dataUser, 'password');
+            console.log(propertyDescriptor?.configurable);
+
             const userToken = jwt.sign(payload, config.app.jwtToken)
 
-            res.status(200).json({data: dataUser, authtoken: userToken})
+            res.status(200).json({ data: dataUser, authtoken: userToken })
         } else {
             // The password is invalid
-            res.status(400).json({mssg:"email or password invalid", data: req.body})
+            res.status(401).json({ mssg: "email or password invalid" })
         }
     } catch (error) {
         res.status(500).json({ mssg: "an error occured", status: 500, err: error })
@@ -57,7 +64,7 @@ exports.register = (req: Request, res: Response) => { // user registration
 
                 const userToken = jwt.sign(payload, config.app.jwtToken)
 
-                res.status(200).json({data: savedUser, authtoken: userToken})
+                res.status(200).json({ data: savedUser, authtoken: userToken })
             }
         })
     } catch (error) {
@@ -65,7 +72,7 @@ exports.register = (req: Request, res: Response) => { // user registration
     }
 };
 
-exports.getAll = (req: Request, res: Response) => { // get all users
+exports.getAll = async (req: Request, res: Response) => { // get all users
     try {
         let filter: any = null
         let status: boolean = true
@@ -92,13 +99,14 @@ exports.getAll = (req: Request, res: Response) => { // get all users
             }
         }
 
-        User.find(filter).populate().exec((err: MongooseError, datas: Array<ResultUserDto>) => {
-            if (err) {
-                res.status(400).json({ error: err.message, status: 400 })
-            } else {
-                res.status(200).json({ data: datas, status: 200 })
-            }
-        })
+        const userDatas = await User.find(filter, '-password').populate().exec()
+
+        if (userDatas) {
+            res.status(200).json({ data: userDatas, status: 200 })
+        } else {
+            res.status(400).json({ error: {}, status: 400 })
+        }
+
     } catch (error) {
         res.status(500).json({ error: "an error occured", status: 500 })
     }

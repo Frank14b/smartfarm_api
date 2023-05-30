@@ -55,3 +55,12 @@ export type UserRegisterDto = {
     email: string,
     password: string
 }
+
+//////////////////////// GET DATA DTO /////////////////////
+
+export type GetAllUserDto = {
+    skip: number,
+    limit: number,
+    sort: string,
+    column: string
+}
