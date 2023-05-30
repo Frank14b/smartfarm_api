@@ -12,7 +12,7 @@ exports.login = async (req: Request, res: Response) => { // user login
     try {
         const userIp = requestIP.getClientIp(req);
 
-        let dataUser = await User.findOne({ email: req.body?.email ?? "" });
+        const dataUser = await User.findOne({ email: req.body?.email ?? "" });
 
         const checkPassword = await dataUser.verifyPassword(req.body?.password ?? "")
 
